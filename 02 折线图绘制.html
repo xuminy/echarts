@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/echarts.js"></script>
+</head>
+<body>
+    <div id="myChart" style="width: 600px;height:400px;"></div>
+
+    <script>
+        //初始化Echarts
+        var myChart = echarts.init(document.getElementById('myChart'));
+        //指定图标的配置项和数据
+        var option = {
+            title: {
+                text: '折线图堆叠',//标题
+                x:"", //控制标题位置
+                subtext:"相关信息"
+            },
+            tooltip: {//数据提示
+                // show:true,
+                trigger: 'axis' //显示在轴上
+            },
+            legend: {
+                data: ['邮件营销', '联盟广告'] //echarts显示提示的数据数量
+            },
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            toolbox: { //工具箱，可以对数据进行批量修改
+              show:true,
+              color:["red"],
+              orient:"vertical",
+              top:10,//设置位置，可以设置bottom
+              feature:{
+                mark:{  //相关标记
+                  show:true 
+                },
+                dataView:{  //修改标记
+                  show:true,
+                  readOnly:false //判断数据是否可以刷新，true则不能修改
+                },
+                magicType:{ //是否进行类型切换
+                  show:true,
+                  type:["line","bar"]
+                },
+                restore:{ //是否进行刷新
+                  show:true 
+                },
+                savaAsImage:{ //是否保存图片
+                  show:true,
+                  title:"保存为图片",  //提示字
+                  type:"jpg",
+                  lang:"点击本地保存"
+                }
+              }
+            },
+            dataZoom:{ //是否显示区域缩放
+                  show:true,
+                  start:20,
+                  end:80
+            },
+            xAxis: {
+                type: 'category',
+                boundaryGap: false, //起始结束两端是否留白
+                data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'] //可以直接写入函数，返回值是数组
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: '邮件营销',
+                    type: 'line',
+                    stack: '总量',
+                    data: [120, 132, 101, 134, 90, 230, 210]
+                },
+                {
+                    name: '联盟广告',
+                    type: 'line',
+                    stack: '总量',
+                    data: [220, 182, 191, 234, 290, 330, 310]
+                }
+            ]
+        };
+        //实例化的echarts图表，在DOM中渲染图标
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

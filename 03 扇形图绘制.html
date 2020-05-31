@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/echarts2.js"></script>
+    <script src="js/echarts-all.js"></script>
+</head>
+<body>
+    <div id="myChart" style="width: 600px;height:400px;">
+
+    </div>
+
+    <script>
+        var myChart = echarts.init(document.getElementById('myChart')); 
+        var weatherIcons = {
+            // 'Sunny': ROOT_PATH + 'data/asset/img/weather/sunny_128.png',
+            // 'Cloudy': ROOT_PATH + 'data/asset/img/weather/cloudy_128.png',
+            // 'Showers': ROOT_PATH + 'data/asset/img/weather/showers_128.png'
+        };
+        var option = {
+            title: { //标题
+                text: '天气情况统计',
+                subtext: '虚构数据',
+                left: 'center'
+            },
+            tooltip: { //鼠标提示
+                trigger: 'item', //触发类型
+                formatter: '{a} <br/>{b} : {c} ({d}%)' //对提示的内容格式化
+                            //a（系列名称 series） b（数据项名称 每一个data） c（数值 data中的value） d（ 饼图：百分比 | 雷达图 ：指标名称）
+            },
+            legend: {
+                // orient: 'vertical',
+                // top: 'middle',
+                bottom: 10,
+                left: 'center',
+                data: ['西凉', '益州', '兖州', '荆州', '幽州']
+            },
+            calaulable:false,  //实现拖拽混合计算的功能
+            series: [ //系列
+                {
+                    type: 'pie',
+                    radius: ["65%","15%"], //半径，百分比决定圆的大小 实现环形图以数组的形式放置百分比  内半径和外半径，占比
+                    center: ['50%', '50%'], //圆心的坐标位置
+                    selectedMode: 'single',
+                    avoidLabeLoverlap:false, //防止标签重叠
+                    itemStyle:{ //设置每一项
+                        normal:{
+                            label:{
+                                show:true,
+                                //formatter: '{b} : {c} ({d}%)', //显示的数据，默认显示b，每一项的名称
+                                position: 'inner'
+                            },
+                            labelLine: {
+                                show: false
+                            },
+                        }
+                    },
+                    data: [
+                        {
+                            value: 1548,
+                            name: '幽州',
+                            label: {
+                                formatter: [
+                                    '{title|{b}}{abg|}',
+                                    '  {weatherHead|天气}{valueHead|天数}{rateHead|占比}',
+                                    '{hr|}',
+                                    '  {Sunny|}{value|202}{rate|55.3%}',
+                                    '  {Cloudy|}{value|142}{rate|38.9%}',
+                                    '  {Showers|}{value|21}{rate|5.8%}'
+                                ].join('\n'),
+                                backgroundColor: '#eee',
+                                borderColor: '#777',
+                                borderWidth: 1,
+                                borderRadius: 4,
+                                rich: {
+                                    title: {
+                                        color: '#eee',
+                                        align: 'center'
+                                    },
+                                    abg: {
+                                        backgroundColor: '#333',
+                                        width: '100%',
+                                        align: 'right',
+                                        height: 25,
+                                        borderRadius: [4, 4, 0, 0]
+                                    },
+                                    Sunny: {
+                                        height: 30,
+                                        align: 'left',
+                                        backgroundColor: {
+                                            image: weatherIcons.Sunny
+                                        }
+                                    },
+                                    Cloudy: {
+                                        height: 30,
+                                        align: 'left',
+                                        backgroundColor: {
+                                            image: weatherIcons.Cloudy
+                                        }
+                                    },
+                                    Showers: {
+                                        height: 30,
+                                        align: 'left',
+                                        backgroundColor: {
+                                            image: weatherIcons.Showers
+                                        }
+                                    },
+                                    weatherHead: {
+                                        color: '#333',
+                                        height: 24,
+                                        align: 'left'
+                                    },
+                                    hr: {
+                                        borderColor: '#777',
+                                        width: '100%',
+                                        borderWidth: 0.5,
+                                        height: 0
+                                    },
+                                    value: {
+                                        width: 20,
+                                        padding: [0, 20, 0, 30],
+                                        align: 'left'
+                                    },
+                                    valueHead: {
+                                        color: '#333',
+                                        width: 20,
+                                        padding: [0, 20, 0, 30],
+                                        align: 'center'
+                                    },
+                                    rate: {
+                                        width: 40,
+                                        align: 'right',
+                                        padding: [0, 10, 0, 0]
+                                    },
+                                    rateHead: {
+                                        color: '#333',
+                                        width: 40,
+                                        align: 'center',
+                                        padding: [0, 10, 0, 0]
+                                    }
+                                }
+                            }
+                        },
+                        {value: 535, name: '荆州' ,selected:true}, //设置默认项
+                        {value: 510, name: '兖州'},
+                        {value: 634, name: '益州'},
+                        {value: 735, name: '西凉'}
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

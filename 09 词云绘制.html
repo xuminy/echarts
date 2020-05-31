@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/jquery-3.4.1.js"></script>
+    <script src="js/echarts-all.js"></script>
+</head>
+<body>
+    <div id="myChart" style="width: 600px;height:400px;">
+
+    </div>
+
+    <script>
+        $(function(){
+            $.get('json/data.json', function (geoJson) {
+            console.log(geoJson)
+        })
+        })
+        var myChart = echarts.init(document.getElementById('myChart'));
+        function createRandomItemStyle() {
+    return {
+        normal: { //产生随机的颜色
+            color: 'rgb(' + [
+                Math.round(Math.random() * 160),
+                Math.round(Math.random() * 160),
+                Math.round(Math.random() * 160)
+            ].join(',') + ')'
+        }
+    };
+}
+option = {
+    title: {
+        text: 'Google Trends',
+        link: 'http://www.google.com/trends/hottrends'
+    },
+    tooltip: {
+        show: true
+    },
+    series: [{
+        name: 'Google Trends',
+        type: 'wordCloud',
+        size: ['80%', '80%'],//字符云的大小
+        textRotation : [0, 45, 90, -45],//设置文字随机角度
+        textPadding: 0,//词组间隔
+        autoSize: {
+            enable: true,
+            minSize: 14 //最小不小于14
+        },
+        data: [
+            {
+                name: "明明呀",
+                value: 10000,
+                itemStyle: {
+                    normal: {
+                        color: 'black'
+                    }
+                }
+            },
+            {
+                name: "小公主呀",
+                value: 6181,
+                itemStyle: createRandomItemStyle() //自定义的颜色
+            },
+            {
+                name: "糖糖呀",
+                value: 4386,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "喜欢呀",
+                value: 4055,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "天气真好~",
+                value: 2467,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "开心呀~",
+                value: 2244,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "可乐",
+                value: 1898,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "冰淇淋",
+                value: 1484,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "薯条条",
+                value: 1112,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "花花好看",
+                value: 965,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "李大芸~",
+                value: 847,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "Lena Dunham",
+                value: 582,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "Lewis Hamilton",
+                value: 555,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "KXAN",
+                value: 550,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "Mary Ellen Mark",
+                value: 462,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "Farrah Abraham",
+                value: 366,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "Rita Ora",
+                value: 360,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "Serena Williams",
+                value: 282,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "NCAA baseball tournament",
+                value: 273,
+                itemStyle: createRandomItemStyle()
+            },
+            {
+                name: "Point Break",
+                value: 265,
+                itemStyle: createRandomItemStyle()
+            }
+        ]
+    }]
+};
+        myChart.setOption(option);
+    </script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="js/echarts.js"></script>
+    <style>
+        div{
+            float: left;
+        }
+    </style>
+</head>
+<body>
+    <div id="myChart" style="width: 600px;height:400px;">
+
+    </div>
+    <div id="myChart1" style="width: 600px;height:400px;"></div>
+
+
+    <script>
+        var myChart = echarts.init(document.getElementById('myChart'),"vintage");
+        option = {
+            title: {
+                text: '某站点用户访问来源',
+                subtext: '纯属虚构',
+                left: 'center'
+            },
+            tooltip: {
+                trigger: 'item',
+                formatter: '{a} <br/>{b} : {c} ({d}%)'
+            },
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['直接访问', '邮件营销', '联盟广告', '视频广告', '搜索引擎']
+            },
+            series: [
+                {
+                    name: '访问来源',
+                    type: 'pie',
+                    radius: '55%',
+                    center: ['50%', '60%'],
+                    data: [
+                        {value: 335, name: '直接访问'},
+                        {value: 310, name: '邮件营销'},
+                        {value: 234, name: '联盟广告'},
+                        {value: 135, name: '视频广告'},
+                        {value: 1548, name: '搜索引擎'}
+                    ],
+                    emphasis: {
+                        itemStyle: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+        var myChart1 = echarts.init(document.getElementById('myChart1'));
+        
+        myChart.setOption(option);
+        myChart.on("click",function(params){//通过点击事件动态的获取数据并传递
+            myChart1.setOption({
+                tooltip: {
+                    formatter: '{a} <br/>{b} : {c}%'
+                },
+                toolbox: {
+                    feature: {
+                        restore: {},
+                        saveAsImage: {}
+                    }
+                },
+                series: [
+                    {
+                        name: '业务指标',
+                        type: 'gauge',
+                        detail: {formatter: '{value}人'},
+                        data: [{value: params.value-100, name: params.name}]
+                    }
+                ]
+            });
+        })
+        myChart.on('legendselectchanged', function (params) {
+            // 获取点击图例的选中状态
+            var isSelected = params.selected[params.name];
+            // 在控制台中打印
+            console.log((isSelected ? '选中了' : '取消选中了') + '图例' + params.name);
+            // 打印所有图例的状态
+            console.log(params.selected);
+        });
+
+    </script>
+</body>
+</html>
